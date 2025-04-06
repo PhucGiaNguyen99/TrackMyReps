@@ -26,6 +26,44 @@ public class ExerciseDetailActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_detail);
+
+        dbHelper = new WorkoutDatabaseHelper(this);
+
+        nameText = findViewById(R.id.exerciseNameText); // TextView for name (non-editable)
+        setsInput = findViewById(R.id.detailSetsInput);
+        repsInput = findViewById(R.id.detailRepsInput);
+        weightInput = findViewById(R.id.detailWeightInput);
+        saveBtn = findViewById(R.id.saveDetailButton);
+        cancelBtn = findViewById(R.id.cancelDetailButton);
+
+        int exerciseId = getIntent().getIntExtra("exercise_id", -1);
+        if (exerciseId == -1) {
+            Toast.makeText(this, "No exercise found", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        for (Exercise e : dbHelper.getAllExercises()) {
+            if (e.getId() == exerciseId) {
+                exercise = e;
+                break;
+            }
+        }
+
+        if (exercise == null) {
+            Toast.makeText(this, "Exercise not found", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        // Populate fields
+        nameText.setText(exercise.getName());
+        setsInput.setText(String.valueOf(exercise.getSets()));
+        repsInput.setText(String.valueOf(exercise.getReps()));
+        weightInput.setText(String.valueOf(exercise.getWeight()));
+
+        saveBtn.setOnClickListener(v -> saveChanges());
+        cancelBtn.setOnClickListener(v -> finish());
     }
 
     private void saveChanges() {
