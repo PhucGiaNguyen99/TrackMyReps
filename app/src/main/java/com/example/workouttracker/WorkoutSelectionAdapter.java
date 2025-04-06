@@ -43,9 +43,16 @@ public class WorkoutSelectionAdapter extends RecyclerView.Adapter<WorkoutSelecti
     @Override
     public void onBindViewHolder(@NonNull WorkoutSelectionAdapter.ViewHolder holder, int position) {
         Exercise exercise = exercises.get(position);
+
         holder.nameText.setText(exercise.getName());
-        holder.checkbox.setChecked(checked[position]);
-        holder.checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> checked[position] = isChecked);
+
+        holder.checkbox.setOnCheckedChangeListener(null); // clear old listener
+        holder.checkbox.setChecked(checked[position]);    // set correct value
+
+        holder.checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            checked[holder.getAdapterPosition()] = isChecked; // always get current adapter position
+        });
+
     }
 
     @Override

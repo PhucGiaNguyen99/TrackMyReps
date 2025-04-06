@@ -4,6 +4,7 @@ package com.example.workouttracker;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -32,6 +33,8 @@ public class PlanWorkoutActivity extends AppCompatActivity {
         Button startButton = findViewById(R.id.startWorkoutButton);
 
         List<Exercise> exercises = dbHelper.getAllExercises();
+        Log.d("PlanWorkout", "Found " + exercises.size() + " exercises");
+
         adapter = new WorkoutSelectionAdapter(exercises);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
