@@ -24,12 +24,15 @@ public class MainActivity extends AppCompatActivity {
     private WorkoutDatabaseHelper dbHelper;
     private List<Exercise> exercises;
     private ExerciseAdapter adapter;
-    private Button addExerciseButton;
+    private Button addExerciseButton, planWorkoutButton, startWorkoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        planWorkoutButton = findViewById(R.id.planWorkoutButton);
+        startWorkoutButton = findViewById(R.id.startWorkoutButton);
 
         dbHelper = new WorkoutDatabaseHelper(this);
 
@@ -39,6 +42,18 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         exercises = dbHelper.getAllExercises();
+
+        // Set click listeners
+        planWorkoutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, PlanWorkoutActivity.class);
+            startActivity(intent);
+        });
+
+        startWorkoutButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, WorkoutSelectionActivity.class);
+            startActivity(intent);
+        });
+
         adapter = new ExerciseAdapter(exercises, new ExerciseAdapter.OnItemClickListener() {
 
             @Override

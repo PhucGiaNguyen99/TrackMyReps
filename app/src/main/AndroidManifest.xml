@@ -17,6 +17,8 @@
         <activity android:name=".ExerciseDetailActivity" />
         <activity android:name=".PlanWorkoutActivity" />
         <activity android:name=".WorkoutSessionActivity" />
+        <activity android:name=".WorkoutSelectionActivity" />
+
 
         <activity
             android:name=".MainActivity"
