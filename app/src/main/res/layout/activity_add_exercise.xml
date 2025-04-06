@@ -1,0 +1,46 @@
+<!-- res/layout/activity_add_exercise.xml -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/exerciseNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Exercise Name" />
+
+        <EditText
+            android:id="@+id/setsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Sets"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/repsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Reps"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/weightInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Weight (lbs)"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/saveExerciseButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Exercise"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>
