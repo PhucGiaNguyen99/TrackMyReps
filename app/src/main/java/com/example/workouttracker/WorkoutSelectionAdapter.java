@@ -22,7 +22,7 @@ public class WorkoutSelectionAdapter extends RecyclerView.Adapter<WorkoutSelecti
         this.checked = new boolean[exercises.size()];
     }
 
-    public List<Exercise> getSelectedExcercises() {
+    public List<Exercise> getSelectedExercises() {
         List<Exercise>  selected = new java.util.ArrayList<>();
         for (int i = 0; i < exercises.size(); i++) {
             if (checked[i]) {
@@ -70,4 +70,11 @@ public class WorkoutSelectionAdapter extends RecyclerView.Adapter<WorkoutSelecti
             checkbox = itemView.findViewById(R.id.checkbox);
         }
     }
+
+    // Adding this function for testing
+    public void setChecked(int index, boolean isChecked) {
+        checked[index] = isChecked;
+    }
+
+
 }

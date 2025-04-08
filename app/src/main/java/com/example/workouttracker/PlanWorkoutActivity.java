@@ -3,7 +3,6 @@ package com.example.workouttracker;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
@@ -40,7 +39,7 @@ public class PlanWorkoutActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         startButton.setOnClickListener(v -> {
-            List<Exercise> selected = adapter.getSelectedExcercises();
+            List<Exercise> selected = adapter.getSelectedExercises();
             if (selected.isEmpty()) {
                 Toast.makeText(this, "Select at least one exercise", Toast.LENGTH_SHORT).show();
             }
