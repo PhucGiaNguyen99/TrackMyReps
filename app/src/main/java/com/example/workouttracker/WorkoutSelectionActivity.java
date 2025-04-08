@@ -24,6 +24,8 @@ public class WorkoutSelectionActivity extends AppCompatActivity {
 
         workoutListView = findViewById(R.id.workoutListView);
 
+        workoutPlans = java.util.Arrays.asList("Push Day", "Leg Day", "Cardio Burn");
+
         // Populate the workoutPlans list with your workout plan names
         // For example, workoutPlans = Arrays.asList("Plan A", "Plan B");
 
