@@ -112,4 +112,47 @@ public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
         int rows = db.delete(TABLE_EXERCISES, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
         return rows > 0;
     }
+
+    public void clearAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("exercises", null, null);
+    }
+
+    public Exercise getExerciseById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                "exercises",                        // table name
+                null,                               // columns (null = all)
+                "id = ?",                           // where clause
+                new String[]{String.valueOf(id)},   // where args
+                null, null, null                    // groupBy, having, orderBy
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            Exercise exercise = new Exercise(
+                    cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("sets")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("reps")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("weight"))
+            );
+            exercise.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id"))); // Set the ID too!
+            cursor.close();
+            return exercise;
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+        return null;
+    }
+
+    public void clearDatabase() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("exercises", null, null);
+        db.close();
+    }
+
+
+
 }
