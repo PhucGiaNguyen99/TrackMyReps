@@ -38,6 +38,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.espresso.core)
+    implementation("com.google.android.material:material:1.11.0")
     testImplementation(libs.junit)
     testImplementation(libs.core)
     testImplementation(libs.ext.junit)
