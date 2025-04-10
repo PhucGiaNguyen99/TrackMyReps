@@ -84,6 +84,7 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             boolean updated = dbHelper.updateExercise(exercise);
             if (updated) {
                 Toast.makeText(this, "Exercise updated", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
                 finish();
             } else {
                 Toast.makeText(this, "Failed to update exercise", Toast.LENGTH_SHORT).show();
