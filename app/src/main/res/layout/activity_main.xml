@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="➕ Add New Exercise"
             android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/purple_500"
+            android:backgroundTint="@color/black"
             android:textColor="@color/white" />
 
         <Button
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:text="📋 Plan Workout"
             android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/teal_700"
+            android:backgroundTint="@color/black"
             android:textColor="@color/white" />
 
         <Button
@@ -81,7 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="🔥 Start Workout"
-            android:backgroundTint="@color/red"
+            android:backgroundTint="@color/black"
             android:textColor="@color/white" />
     </LinearLayout>
 

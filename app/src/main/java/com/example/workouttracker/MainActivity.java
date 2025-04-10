@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Exercise exercise) {
                 Toast.makeText(MainActivity.this, "Clicked: " + exercise.getName(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, ExerciseDetailActivity.class);
+                Intent intent = new Intent(MainActivity.this, ExerciseDisplayActivity.class);
                 intent.putExtra("exercise_id", exercise.getId());
                 startActivity(intent);
             }
