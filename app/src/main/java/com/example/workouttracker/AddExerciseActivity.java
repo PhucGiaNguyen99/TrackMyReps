@@ -1,23 +1,23 @@
 package com.example.workouttracker;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.TextUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.workouttracker.database.WorkoutDatabaseHelper;
 import com.example.workouttracker.models.Exercise;
 
 public class AddExerciseActivity extends AppCompatActivity {
+
     private EditText nameInput, setsInput, repsInput, weightInput;
     private WorkoutDatabaseHelper dbHelper;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_exercise);
 
@@ -28,7 +28,11 @@ public class AddExerciseActivity extends AppCompatActivity {
         repsInput = findViewById(R.id.repsInput);
         weightInput = findViewById(R.id.weightInput);
 
-        findViewById(R.id.saveExerciseButton).setOnClickListener(v -> saveExercise());
+        Button saveBtn = findViewById(R.id.saveExerciseButton);
+        Button cancelBtn = findViewById(R.id.cancelExerciseButton);
+
+        saveBtn.setOnClickListener(v -> saveExercise());
+        cancelBtn.setOnClickListener(v -> finish()); // Return to previous screen
     }
 
     private void saveExercise() {
@@ -37,25 +41,39 @@ public class AddExerciseActivity extends AppCompatActivity {
         String repsStr = repsInput.getText().toString().trim();
         String weightStr = weightInput.getText().toString().trim();
 
-        // If any of the input fields are empty, show notifications
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(setsStr) ||
-                TextUtils.isEmpty(repsStr) || TextUtils.isEmpty(weightStr)) {
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(setsStr)
+                || TextUtils.isEmpty(repsStr) || TextUtils.isEmpty(weightStr)) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        int sets = Integer.parseInt(setsStr);
-        int reps = Integer.parseInt(repsStr);
-        int weight = Integer.parseInt(weightStr);
+        try {
+            int sets = Integer.parseInt(setsStr);
+            int reps = Integer.parseInt(repsStr);
+            int weight = Integer.parseInt(weightStr);
 
-        Exercise newExercise = new Exercise(name, sets, reps, weight);
-        boolean success = dbHelper.addExercise(newExercise);
+            if (sets <= 0 || reps <= 0 || weight < 0) {
+                Toast.makeText(this, "Values must be positive", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-        if (success) {
-            Toast.makeText(this, "Exercise added", Toast.LENGTH_SHORT).show();
-            finish(); // return to MainActivity
-        } else {
-            Toast.makeText(this, "Exercise with that name already exists", Toast.LENGTH_SHORT).show();
+            if (dbHelper.exerciseExists(name)) {
+                Toast.makeText(this, "Exercise with that name already exists", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Exercise newExercise = new Exercise(name, sets, reps, weight);
+            boolean success = dbHelper.addExercise(newExercise);
+
+            if (success) {
+                Toast.makeText(this, "Exercise added", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, "Failed to add exercise", Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Invalid numeric input", Toast.LENGTH_SHORT).show();
         }
     }
 }
