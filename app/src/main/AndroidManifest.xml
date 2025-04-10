@@ -13,6 +13,7 @@
         android:theme="@style/Theme.WorkoutTracker"
         tools:targetApi="31">
 
+        <activity android:name=".ExerciseDisplayActivity" />
         <activity android:name=".AddExerciseActivity" />
         <activity android:name=".ExerciseDetailActivity" />
         <activity android:name=".PlanWorkoutActivity" />
