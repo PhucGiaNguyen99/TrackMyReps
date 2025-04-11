@@ -57,6 +57,25 @@ public class ExerciseDetailActivity extends AppCompatActivity {
         cancelBtn.setOnClickListener(v -> finish());
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("name", nameInput.getText().toString());
+        outState.putString("sets", setsInput.getText().toString());
+        outState.putString("reps", repsInput.getText().toString());
+        outState.putString("weight", weightInput.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        nameInput.setText(savedInstanceState.getString("name"));
+        setsInput.setText(savedInstanceState.getString("sets"));
+        repsInput.setText(savedInstanceState.getString("reps"));
+        weightInput.setText(savedInstanceState.getString("weight"));
+    }
+
+
     private void updateExercise() {
         String setsStr = setsInput.getText().toString().trim();
         String repsStr = repsInput.getText().toString().trim();
