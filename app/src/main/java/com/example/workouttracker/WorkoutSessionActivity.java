@@ -1,13 +1,10 @@
 package com.example.workouttracker;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workouttracker.models.Exercise;
 
@@ -15,36 +12,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutSessionActivity extends AppCompatActivity {
+
+    private ListView sessionListView;
     private List<Exercise> workoutList;
-    private ExerciseAdapter adapter;
+    private WorkoutPlanAdapter adapter;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_session);
 
-        workoutList = (ArrayList<Exercise>) getIntent().getSerializableExtra("selected_exercises");
+        sessionListView = findViewById(R.id.sessionListView);
 
-        RecyclerView recyclerView = findViewById(R.id.sessionRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Get the workout plan directly from the global manager
+        workoutList = new ArrayList<>(WorkoutPlanManager.getPlan());
 
-        adapter = new ExerciseAdapter(workoutList, new ExerciseAdapter.OnItemClickListener() {
+
+        if (workoutList == null || workoutList.isEmpty()) {
+            Toast.makeText(this, "No workout plan found", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        adapter = new WorkoutPlanAdapter(this, workoutList) {
             @Override
-            public void onItemClick(Exercise exercise) {
-                Toast.makeText(WorkoutSessionActivity.this, "Tap and hold to complete", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onItemLongClick(Exercise exercise) {
-                workoutList.remove(exercise);
-                adapter.notifyDataSetChanged();
+            public void notifyDataSetChanged() {
+                super.notifyDataSetChanged();
                 if (workoutList.isEmpty()) {
                     Toast.makeText(WorkoutSessionActivity.this, "Workout Completed!", Toast.LENGTH_LONG).show();
                     finish();
                 }
             }
-        });
+        };
 
-        recyclerView.setAdapter(adapter);
+        sessionListView.setAdapter(adapter);
     }
 }
