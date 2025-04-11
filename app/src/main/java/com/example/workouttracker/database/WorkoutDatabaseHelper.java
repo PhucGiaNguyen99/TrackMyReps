@@ -39,6 +39,7 @@ public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
         insertDefaultExercises(db);
     }
 
+    // Insert default 3 exercises to the database
     private void insertDefaultExercises(SQLiteDatabase db) {
         insertExercise(db, new Exercise("Push-ups", 3, 15, 0));
         insertExercise(db, new Exercise("Squats", 3, 20, 0));
@@ -113,46 +114,53 @@ public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
         return rows > 0;
     }
 
-    public void clearAll() {
+    public boolean exerciseExists(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT 1 FROM " + TABLE_EXERCISES + " WHERE " + COLUMN_NAME + " = ? LIMIT 1",
+                new String[]{name}
+        );
+
+        boolean exists = (cursor != null && cursor.moveToFirst());
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+        return exists;
+    }
+
+    public void clearDatabase() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("exercises", null, null);
+        db.delete(TABLE_EXERCISES, null, null); // Replace "exercises" with your actual table name if it's different
+        db.close();
     }
 
     public Exercise getExerciseById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
+        Exercise exercise = null;
 
         Cursor cursor = db.query(
-                "exercises",                        // table name
-                null,                               // columns (null = all)
-                "id = ?",                           // where clause
-                new String[]{String.valueOf(id)},   // where args
-                null, null, null                    // groupBy, having, orderBy
+                TABLE_EXERCISES,
+                null,
+                COLUMN_ID + " = ?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null
         );
 
         if (cursor != null && cursor.moveToFirst()) {
-            Exercise exercise = new Exercise(
-                    cursor.getString(cursor.getColumnIndexOrThrow("name")),
-                    cursor.getInt(cursor.getColumnIndexOrThrow("sets")),
-                    cursor.getInt(cursor.getColumnIndexOrThrow("reps")),
-                    cursor.getInt(cursor.getColumnIndexOrThrow("weight"))
-            );
-            exercise.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id"))); // Set the ID too!
-            cursor.close();
-            return exercise;
-        }
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME));
+            int sets = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_SETS));
+            int reps = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_REPS));
+            int weight = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_WEIGHT));
 
-        if (cursor != null) {
+            exercise = new Exercise(id, name, sets, reps, weight);
             cursor.close();
         }
-        return null;
-    }
 
-    public void clearDatabase() {
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete("exercises", null, null);
-        db.close();
+        return exercise;
     }
-
 
 
 }
