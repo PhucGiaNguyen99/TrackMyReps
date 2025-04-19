@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Workout Tracker"
+rootProject.name = "project2-pnguye68"
 include(":app")
  

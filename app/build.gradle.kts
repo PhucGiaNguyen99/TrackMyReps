@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.espresso.core)
     implementation("com.google.android.material:material:1.11.0")
+    implementation(libs.espresso.intents)
     testImplementation(libs.junit)
     testImplementation(libs.core)
     testImplementation(libs.ext.junit)
