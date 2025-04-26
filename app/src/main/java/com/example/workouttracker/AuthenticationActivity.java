@@ -22,6 +22,15 @@ public class AuthenticationActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Check if user is already logged in
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            // If use is logged in already, skip the login screen
+            startActivity(new Intent(AuthenticationActivity.this, MainActivity.class));
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_authentication);
 
         mAuth = FirebaseAuth.getInstance();

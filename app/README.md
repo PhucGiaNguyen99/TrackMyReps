@@ -29,7 +29,10 @@ Setup Firebase:
   + Prevents duplicate accounts with the same email.
   + Handles error cases like wrong password, user not found, email already in use, etc.
 - We need to check if inputs are empty, give instant feedback, and any specific rules for password.
-
+- Auto-skip AuthenticationActivity if a user is already logged in:
+  + Check if user is already logged in. When a user signs in successfully, Firebase saves their session. when openning the app later, it automatically restores the session. getCurrentUser() returns the saved user if session is active.
+  + If yes, skip AuthenticationActivity and go straight to MainActivity.
+  + Otherwise, stay on AuthenticationActivity and let them log in.
 
 ** 2. Cloud Firestore:
 - Firestore will be used to extend the app's functionality by storing workout data in the cloud. This integration will support:
