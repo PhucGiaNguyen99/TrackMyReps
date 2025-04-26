@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1022138418984",
+    "project_id": "trackmyreps-622c4",
+    "storage_bucket": "trackmyreps-622c4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022138418984:android:650d481a71810cf082b21d",
+        "android_client_info": {
+          "package_name": "com.example.workouttracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0DECOwE_t3Cpw-K_dIxowR8gcv1D_tOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

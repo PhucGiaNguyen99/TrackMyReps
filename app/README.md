@@ -1,0 +1,42 @@
+Project 3: Adding Firebase Authentication and Firestore Cloud Storage
+
+** 1. Integrate Firebase Authentication:
+- Firebase Authentication is used to enable secure user account management.
+- Key features:
+    + Register using their email and password.
+    + Log in to access their personalized exercise data.
+    + Maintain sessions so users remain signed in across app restarts.
+    + Log out when needed to switch accounts or end their session.
+
+- All protected activities check for a valid authenticated session before allowing access,
+ensuring that user data remains private and secure.
+
+- Detailed Implementation:
+    + LoginActivity.java: create function signInWithEmailAndPassword(email, password). Redirects to MainActivity on success.
+    + RegisterActivity.java: create function createUserWithEmailAndPassword(email, password). Redirects to sign in on success.
+    + MainActivity.java: On startup, checks if user is authenticated. Also include a Logout button.
+
+Setup Firebase:
+- Created the project on Firebase Console with package name. 
+- Downloaded and added the google-services.json to the project. 
+- Chose Email/Password for Sign-in method.
+- Created the AuthenticationActivity and xml for register and sign in.
+- 
+
+** 2. Cloud Firestore:
+- Firestore will be used to extend the app's functionality by storing workout data in the cloud. This integration will support:
+- Per-user exercise lists stored under secure, user-specific collections.
+- Cloud backup and multi-device access, ensuring users can retrieve their data from any device.
+- Real-time syncing between local and cloud data to enhance flexibility and data persistence.
+- Seamless integration with existing features, allowing workout plans and completed sessions to be uploaded and retrieved without disrupting the local flow.
+
+- Key features:
+    + Add Exercise to Firestore.
+    + Sync Workout Plan per User.
+    + Store per-user collections using UID.
+    + Sync with local SQLite for real-time cloud backup.
+
+- Detailed Implementation:
+    + WorkoutDatabaseHelper.java: Wrapped in Firestore.
+    + WorkoutPlanManager.java: Extended to sync selected exercises with Firestore.
+    + MainActivity.java: Modified to fetch workout from Firestore instead of SQLite.
