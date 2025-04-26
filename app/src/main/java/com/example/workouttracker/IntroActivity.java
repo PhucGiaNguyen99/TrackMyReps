@@ -15,7 +15,7 @@ public class IntroActivity extends AppCompatActivity {
 
         Button startBtn = findViewById(R.id.startAppButton);
         startBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+            Intent intent = new Intent(IntroActivity.this, AuthenticationActivity.class);
             startActivity(intent);
             finish(); // Optional: Prevent going back to intro screen
         });
