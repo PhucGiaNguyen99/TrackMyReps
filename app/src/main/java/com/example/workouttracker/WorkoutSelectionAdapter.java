@@ -34,14 +34,14 @@ public class WorkoutSelectionAdapter extends RecyclerView.Adapter<WorkoutSelecti
 
     @NonNull
     @Override
-    public WorkoutSelectionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_exercise_checkbox, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WorkoutSelectionAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Exercise exercise = exercises.get(position);
 
         holder.nameText.setText(exercise.getName());
