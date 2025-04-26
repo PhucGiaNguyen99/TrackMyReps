@@ -22,6 +22,12 @@
             android:textColor="@color/black"
             android:layout_marginBottom="32dp" />
 
+        <ProgressBar
+            android:id="@+id/loadingSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
         <!-- Email -->
         <EditText
             android:id="@+id/emailInput"

@@ -33,7 +33,12 @@ Setup Firebase:
   + Check if user is already logged in. When a user signs in successfully, Firebase saves their session. when openning the app later, it automatically restores the session. getCurrentUser() returns the saved user if session is active.
   + If yes, skip AuthenticationActivity and go straight to MainActivity.
   + Otherwise, stay on AuthenticationActivity and let them log in.
-
+** Added a quick loading spinner when the app opens AuthenticationActivity.
+- Added logout button in MainActivity:
+  + Signs them out of Firebase Authentication.
+  + Sends them back to the AuthenticationActivity.
+  + Clears the backstack so they cannot press back to MainActivity.
+  
 ** 2. Cloud Firestore:
 - Firestore will be used to extend the app's functionality by storing workout data in the cloud. This integration will support:
 - Per-user exercise lists stored under secure, user-specific collections.

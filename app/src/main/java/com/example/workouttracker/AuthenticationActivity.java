@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -17,28 +19,31 @@ import com.google.firebase.auth.FirebaseAuth;
 public class AuthenticationActivity extends AppCompatActivity {
     private EditText emailInput, passwordInput;
     private Button loginButton, registerButton;
+    private ProgressBar loadingSpinner;
+
     private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
 
         // Check if user is already logged in
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+        if (mAuth.getCurrentUser() != null) {
             // If use is logged in already, skip the login screen
-            startActivity(new Intent(AuthenticationActivity.this, MainActivity.class));
-            finish();
+            goToMainActivity();
             return;
         }
 
         setContentView(R.layout.activity_authentication);
 
-        mAuth = FirebaseAuth.getInstance();
-
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
+        loadingSpinner = findViewById(R.id.loadingSpinner);
+
+        loadingSpinner.setVisibility(View.GONE); // Hide spinner at first
 
         loginButton.setOnClickListener(v -> loginUser());
         registerButton.setOnClickListener(v -> registerUser());

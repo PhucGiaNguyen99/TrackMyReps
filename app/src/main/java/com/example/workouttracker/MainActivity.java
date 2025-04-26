@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workouttracker.database.WorkoutDatabaseHelper;
 import com.example.workouttracker.models.Exercise;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
         private WorkoutDatabaseHelper dbHelper;
         private List<Exercise> exercises;
         private ExerciseAdapter adapter;
-        private Button addExerciseButton, planWorkoutButton, startWorkoutButton;
+        private Button addExerciseButton, planWorkoutButton, startWorkoutButton, logoutButton;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ import java.util.List;
 
             recyclerView = findViewById(R.id.exerciseRecyclerView);
             addExerciseButton = findViewById(R.id.addExerciseButton);
+
+            logoutButton = findViewById(R.id.logoutButton);
 
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -51,6 +54,15 @@ import java.util.List;
                 Intent intent = new Intent(MainActivity.this, WorkoutSelectionActivity.class);
                 startActivity(intent);
             });
+
+            logoutButton.setOnClickListener(v -> {
+                FirebaseAuth.getInstance().signOut(); // Sign the user out
+                Intent intent = new Intent(MainActivity.this, AuthenticationActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            });
+
 
             adapter = new ExerciseAdapter(exercises, new ExerciseAdapter.OnItemClickListener() {
 
