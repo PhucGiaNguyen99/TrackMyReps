@@ -20,8 +20,16 @@ Setup Firebase:
 - Created the project on Firebase Console with package name. 
 - Downloaded and added the google-services.json to the project. 
 - Chose Email/Password for Sign-in method.
-- Created the AuthenticationActivity and xml for register and sign in.
-- 
+- Implemented the AuthenticationActivity and xml for register and sign in.
+- Modified the IntroActivity to direct from here to MainActivity.
+- Handled the two buttons, validate input, call Firebase Authenticatioon to create or sign in users, and redirects users to MainActivity after successful login/registration.
+- Validation of input for email and password: Firebase checked:
+  + Checks if the email is a valid email format (like abc@domain.com).
+  + Checks if the password meets minimum strength (for example: usually minimum 6 characters for email/password auth).
+  + Prevents duplicate accounts with the same email.
+  + Handles error cases like wrong password, user not found, email already in use, etc.
+- We need to check if inputs are empty, give instant feedback, and any specific rules for password.
+
 
 ** 2. Cloud Firestore:
 - Firestore will be used to extend the app's functionality by storing workout data in the cloud. This integration will support:

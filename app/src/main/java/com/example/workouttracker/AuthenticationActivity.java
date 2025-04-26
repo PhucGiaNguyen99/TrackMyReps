@@ -17,14 +17,14 @@ import com.google.firebase.auth.FirebaseAuth;
 public class AuthenticationActivity extends AppCompatActivity {
     private EditText emailInput, passwordInput;
     private Button loginButton, registerButton;
-    private FirebaseAuth auth;
+    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
 
-        auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
@@ -44,13 +44,15 @@ public class AuthenticationActivity extends AppCompatActivity {
             return;
         }
 
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener(authResult -> {
-                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AuthenticationActivity.this, MainActivity.class));
-                    finish();
-                })
-                .addOnFailureListener(e -> Toast.makeText(this, "Login failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        goToMainActivity();
+                    } else {
+                        Toast.makeText(this, "Authentication failed: " + task.getException().getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void registerUser() {
@@ -62,10 +64,22 @@ public class AuthenticationActivity extends AppCompatActivity {
             return;
         }
 
-        auth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener(authResult -> {
-                    Toast.makeText(this, "Registration successful! You can now login.", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> Toast.makeText(this, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show();
+                        goToMainActivity();
+                    } else {
+                        Toast.makeText(this, "Registration failed: " + task.getException().getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void goToMainActivity() {
+        Intent intent = new Intent(AuthenticationActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }
