@@ -10,11 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.workouttracker.database.WorkoutDatabaseHelper;
 import com.example.workouttracker.models.Exercise;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddExerciseActivity extends AppCompatActivity {
 
     private EditText nameInput, setsInput, repsInput, weightInput;
     private WorkoutDatabaseHelper dbHelper;
+
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,8 @@ public class AddExerciseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_exercise);
 
         dbHelper = new WorkoutDatabaseHelper(this);
+
+        db = FirebaseFirestore.getInstance();
 
         nameInput = findViewById(R.id.exerciseNameInput);
         setsInput = findViewById(R.id.setsInput);
@@ -63,7 +68,21 @@ public class AddExerciseActivity extends AppCompatActivity {
             }
 
             Exercise newExercise = new Exercise(name, sets, reps, weight);
+
+            // Add the new exercise to the SQLite
             boolean success = dbHelper.addExercise(newExercise);
+
+            // After adding to SQLite successfully, upload the exercise to Firestore
+            // Save each exercise as a document in the "exercises" collection in the Firestore
+            db.collection("exercises")
+                    .add(newExercise)
+                    .addOnSuccessListener(documentReference -> {
+                        Toast.makeText(this, "Exercise added to Firestore", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failed to add to Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+
 
             if (success) {
                 Toast.makeText(this, "Exercise added", Toast.LENGTH_SHORT).show();
