@@ -56,3 +56,14 @@ Setup Firebase:
     + WorkoutDatabaseHelper.java: Wrapped in Firestore.
     + WorkoutPlanManager.java: Extended to sync selected exercises with Firestore.
     + MainActivity.java: Modified to fetch workout from Firestore instead of SQLite.
+
+- After adding successfully to SQLite, upload the exercise to Firestore. Each exercise is saved as a document in the "exercises" collection in Firestore.
+- Download the saved exercises from Firestore and insert into local SQLite database, which ensures even if user use a different device, their saved exercises are still there.
+  + After user successfully logs in: Retrieves the exercises from Firestore to the local Sqlite
+    . Connect to Firestore.
+    . Query the exercises collection.
+    . For each document, create an Exercise object.
+    . Insert into local SQLite database using WorkoutDatabaseHelper.
+  + Improved: Only retrieved from Firestore and stored to the local when the local is empty to avoid
+duplicate -> NEED TO FIGURE OUT WHEN TO DO AND WHEN DO NOT!!!!!!!
+  + 
