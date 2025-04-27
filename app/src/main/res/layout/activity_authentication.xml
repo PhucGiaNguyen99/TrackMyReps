@@ -1,68 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:background="@color/white">
+    android:padding="24dp">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ProgressBar
+        android:id="@+id/loadingSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <EditText
+        android:id="@+id/emailInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:visibility="gone" />
 
-        <!-- Title -->
-        <TextView
-            android:id="@+id/authTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Welcome to TrackMyReps!"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginBottom="32dp" />
+    <EditText
+        android:id="@+id/passwordlInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:visibility="gone" />
 
-        <ProgressBar
-            android:id="@+id/loadingSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:visibility="gone" />
 
-        <!-- Email -->
-        <EditText
-            android:id="@+id/emailInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:layout_marginBottom="16dp" />
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:visibility="gone"
+        android:layout_marginTop="8dp" />
 
-        <!-- Password -->
-        <EditText
-            android:id="@+id/passwordInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:layout_marginBottom="24dp" />
-
-        <!-- Login Button -->
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/black"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Register Button -->
-        <Button
-            android:id="@+id/registerButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Register"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/black" />
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

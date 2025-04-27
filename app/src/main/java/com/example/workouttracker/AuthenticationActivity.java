@@ -38,7 +38,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_authentication);
 
         emailInput = findViewById(R.id.emailInput);
-        passwordInput = findViewById(R.id.passwordInput);
+        passwordInput = findViewById(R.id.passwordlInput);
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
         loadingSpinner = findViewById(R.id.loadingSpinner);
