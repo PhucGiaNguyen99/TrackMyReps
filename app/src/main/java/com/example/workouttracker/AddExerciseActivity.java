@@ -73,18 +73,30 @@ public class AddExerciseActivity extends AppCompatActivity {
             boolean success = dbHelper.addExercise(newExercise);
 
             // After adding to SQLite successfully, upload the exercise to Firestore
-            // Save each exercise as a document in the "exercises" collection in the Firestore
-            db.collection("exercises")
-                    .add(newExercise)
-                    .addOnSuccessListener(documentReference -> {
-                        Toast.makeText(this, "Exercise added to Firestore", Toast.LENGTH_SHORT).show();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Failed to add to Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+            // Save each exercise as a document in the "exercises" collection and specific to each user
+            //db.collection("exercises")
+            //        .add(newExercise)
+            //        .addOnSuccessListener(documentReference -> {
+            //            Toast.makeText(this, "Exercise added to Firestore", Toast.LENGTH_SHORT).show();
+            //        })
+            //        .addOnFailureListener(e -> {
+            //            Toast.makeText(this, "Failed to add to Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            //        });
 
 
             if (success) {
+                // Save to Firestore under current user
+                String userId = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                // Use userId for each user and exercise name as doc ID
+                db.collection("users")
+                                .document(userId).collection("exercises").document(name).set(newExercise).addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(this, "Exercise added to Firestore", Toast.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(this, "Failed to add to Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
+
                 Toast.makeText(this, "Exercise added", Toast.LENGTH_SHORT).show();
                 finish();
             } else {

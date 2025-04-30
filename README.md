@@ -80,3 +80,7 @@ Add completed date tracking & session history
 Add progress graphs and analytics
 
 Support for dark mode and themes
+
+
+** Save new exercise to SQLite locally first, then save it to Firestore for each user **
+- Path: "users/{userId}/exercises/{exerciseName}"
