@@ -10,7 +10,7 @@
         android:id="@+id/loadingSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+         />
 
     <EditText
         android:id="@+id/emailInput"
@@ -18,29 +18,28 @@
         android:layout_height="wrap_content"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:visibility="gone" />
+         />
 
     <EditText
-        android:id="@+id/passwordlInput"
+        android:id="@+id/passwordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
         android:inputType="textPassword"
-        android:visibility="gone" />
+         />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:visibility="gone" />
+         />
 
     <Button
         android:id="@+id/registerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register"
-        android:visibility="gone"
         android:layout_marginTop="8dp" />
 
 </LinearLayout>
