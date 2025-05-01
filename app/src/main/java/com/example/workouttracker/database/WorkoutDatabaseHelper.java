@@ -162,5 +162,9 @@ public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
         return exercise;
     }
 
+    public void clearAllExercises() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_EXERCISES, null, null);
+    }
 
 }
