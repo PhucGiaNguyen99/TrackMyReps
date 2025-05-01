@@ -9,6 +9,10 @@ public class Exercise implements Serializable {
     private int reps;
     private int weight;
 
+    // Added the no-arg constructor for Firestore
+    public Exercise() {
+    }
+
     public Exercise(int id, String name, int sets, int reps, int weight) {
         this.id = id;
         this.name = name;
