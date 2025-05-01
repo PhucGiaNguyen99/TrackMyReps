@@ -52,6 +52,6 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.0")
     implementation("com.google.firebase:firebase-firestore:24.10.0")
 
-
 }
 
+apply(plugin = "com.google.gms.google-services")
