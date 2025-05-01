@@ -13,8 +13,13 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.workouttracker.database.WorkoutDatabaseHelper;
+import com.example.workouttracker.models.Exercise;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 // import com.google.firebase.auth.FirebaseAuth;
 
 public class AuthenticationActivity extends AppCompatActivity {
@@ -74,11 +79,53 @@ public class AuthenticationActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        goToMainActivity();
+                        // goToMainActivity();
+                        // Sync data - fetch the user's exercises from Firestore and insert them into the local WorkoutDatabaseHelper
+                        // Implement the asynchronuous operation
+                        syncFromFirestoreAndContinue();
+
+                        // Cannot navigate Main Activity immediately
+                        // gotToMainActivity()
+
                     } else {
                         Toast.makeText(this, "Authentication failed: " + task.getException().getMessage(),
                                 Toast.LENGTH_SHORT).show();
                     }
+                });
+    }
+
+    private void syncFromFirestoreAndContinue() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(this, "Error: No logged in user", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String userId = currentUser.getUid();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        WorkoutDatabaseHelper dbHelper = new WorkoutDatabaseHelper(this);
+
+        db.collection("users")
+                .document(userId)
+                .collection("exercises")
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    dbHelper.clearAllExercises();   // To avoid duplicates
+                    for (DocumentSnapshot doc : querySnapshot) {
+                        Exercise exercise = doc.toObject(Exercise.class);
+                        if (exercise != null) {
+                            dbHelper.addExercise(exercise);
+                        }
+                    }
+
+                    Toast.makeText(this, "Exercises synced from Firestore", Toast.LENGTH_SHORT).show();
+
+                    // Navigate to Main Activity only after complete sync
+                    goToMainActivity();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Sync failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    goToMainActivity(); // Still proceed
                 });
     }
 
