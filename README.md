@@ -83,4 +83,14 @@ Support for dark mode and themes
 
 
 ** Save new exercise to SQLite locally first, then save it to Firestore for each user **
-- Path: "users/{userId}/exercises/{exerciseName}"
+- Path: "users/{userId}/exercises/{exerciseName}
+
+** After adding new exercise to Firestore under user collection after adding to SQLite: 
+- Sync Firestore Data to Local SQLite on Login
+
+- Handle Real-Time Updates
+
+- Secure Firestore Rules:
+
+- Backed Up Planned Workouts.
+
