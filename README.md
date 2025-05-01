@@ -85,12 +85,19 @@ Support for dark mode and themes
 ** Save new exercise to SQLite locally first, then save it to Firestore for each user **
 - Path: "users/{userId}/exercises/{exerciseName}
 
-** After adding new exercise to Firestore under user collection after adding to SQLite: 
-- Sync Firestore Data to Local SQLite on Login
+- Sync data after adding new exercise to Firestore under user collection after adding to SQLite:
+    + Download data from Firestore
+    + Save it into SQLite - the local database gets refreshed
+    + Use that to render UI fast and support offline use
+    + Firstore: Data is backed up per use - they can log in from any device and get their data
+    + SQLite: data is stored locally on the device. When user clears app data or uninstalls the SQLite is wiped but the Firestore is still safe
 
-- Handle Real-Time Updates
+- Handle Real-Time Updates:
+    + Update the SQLite immediately - reflects in RecyclerView.
+    + Update the Firestore asynchronously in the background.
 
-- Secure Firestore Rules:
+- Secure Firestore Rules
 
 - Backed Up Planned Workouts.
+
 
