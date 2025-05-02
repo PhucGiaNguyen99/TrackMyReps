@@ -100,4 +100,9 @@ Support for dark mode and themes
 
 - Backed Up Planned Workouts.
 
+** Update to Firebase after successful update on SQLite **
+- Only update Firestore after the SQLite update succeeds.
+- Handle Firestore success/failure using listeners.
+- 
+
 
