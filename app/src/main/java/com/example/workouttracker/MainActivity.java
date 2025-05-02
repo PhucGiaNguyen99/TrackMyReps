@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -100,7 +101,36 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle("Delete Exercise")
                 .setMessage("Are you sure you want to delete " + exercise.getName() + "?")
                 .setPositiveButton("Delete", (dialog, which) -> {
-                    dbHelper.deleteExercise(exercise.getId());
+                    // Delete item from SQLite
+                    boolean deleted = dbHelper.deleteExercise(exercise.getId());
+
+                    if (!deleted) {
+                        Toast.makeText(this, "Failed to delete from local database", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    // After successfully delete from SQLite, delete from Firestore
+                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                    if (currentUser == null) {
+                        Toast.makeText(this, "Not logged in. Can't delete from Firestore.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    String userId = currentUser.getUid();
+                    FirebaseFirestore.getInstance()
+                                    .collection("users")
+                            .document(userId)
+                            .collection("exercises")
+                            .document(exercise.getName()).delete()
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(this, "Exercise deleted", Toast.LENGTH_SHORT).show();
+                                setResult(RESULT_OK);
+                                finish();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(this, "Failed to delete from Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
+
                     refreshExerciseList();
                     Toast.makeText(this, "Exercise deleted", Toast.LENGTH_SHORT).show();
                 })
