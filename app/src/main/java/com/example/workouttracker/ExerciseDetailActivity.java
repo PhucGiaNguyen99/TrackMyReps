@@ -2,6 +2,7 @@ package com.example.workouttracker;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -10,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.workouttracker.database.WorkoutDatabaseHelper;
 import com.example.workouttracker.models.Exercise;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ExerciseDetailActivity extends AppCompatActivity {
 
@@ -100,15 +104,41 @@ public class ExerciseDetailActivity extends AppCompatActivity {
             exercise.setReps(reps);
             exercise.setWeight(weight);
 
+            // Update the record in SQLite
             boolean updated = dbHelper.updateExercise(exercise);
-            if (updated) {
-                Toast.makeText(this, "Exercise updated", Toast.LENGTH_SHORT).show();
-                setResult(RESULT_OK);
-                finish();
-            } else {
+
+            if (!updated) {
                 Toast.makeText(this, "Failed to update exercise", Toast.LENGTH_SHORT).show();
+                return;
             }
 
+            // Create new exercise object
+            Exercise updatedExercise = new Exercise(exercise.getName(), sets, reps, weight);
+
+            // Get the userId
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            if (currentUser == null) {
+                Toast.makeText(this, "Not logged in. Can't sync to Firestore.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String userId = currentUser.getUid();
+
+            // Update the record in Firestore
+            FirebaseFirestore.getInstance()
+                    .collection("users")
+                    .document(userId)
+                    .collection("exercises")
+                    .document(exercise.getName())
+                    .set(updatedExercise)
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(this, "Exercise updated in Firestore", Toast.LENGTH_SHORT).show();
+                        setResult(RESULT_OK);
+                        finish();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failed to update in Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Invalid numeric input", Toast.LENGTH_SHORT).show();
         }
