@@ -124,8 +124,11 @@ public class MainActivity extends AppCompatActivity {
                             .document(exercise.getName()).delete()
                             .addOnSuccessListener(aVoid -> {
                                 Toast.makeText(this, "Exercise deleted", Toast.LENGTH_SHORT).show();
-                                setResult(RESULT_OK);
-                                finish();
+
+                                // No need to add, because you are working on and staying on MainActivtiy, so no need to terminate the current activity and communication back the previous screen
+                                // If keeping those setResult() and finish(), it terminates the current screen and out of the app
+                                // setResult(RESULT_OK);
+                                // finish();
                             })
                             .addOnFailureListener(e -> {
                                 Toast.makeText(this, "Failed to delete from Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
