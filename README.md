@@ -102,7 +102,10 @@ Support for dark mode and themes
 
 ** Update to Firebase after successful update on SQLite **
 - Only update Firestore after the SQLite update succeeds.
-- Handle Firestore success/failure using listeners.
-- 
+- Handle Firestore success/failure using listeners. Add setResult() and finish() when successful to communicate back to the previous screen (MainActivity).
 
+** Delete item in Firebase after successful delete on SQLite **
+- Delete exercise of user in Firebase.
+- No need to add setResult() and finish() because working on and staying on MainActivity, not working on side activity so no need to communicate back to previous activity like update.
+Only update the RecyclerView directly, so no need to close the activity or pass a result back.
 
