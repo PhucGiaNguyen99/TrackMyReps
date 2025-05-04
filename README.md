@@ -5,18 +5,12 @@ TrackMyReps is a fitness-focused Android app designed to help users plan workout
 📱 Features
 
 🏋️ Exercise Management
-
-Add new exercises with:
-
-Unique name (required)
-
-Optional sets, reps, and weight fields (default to 0 if empty)
-
-Validate input with helpful hints and error checking
-
-View all exercises in a vertically scrolling list with clean UI cards
-
-Tap to view/edit exercise details
+- Add new exercises with:
+   +  Unique name (required)
+   +  Optional sets, reps, and weight fields (default to 0 if empty)
+- Validate input with helpful hints and error checking
+- View all exercises in a vertically scrolling list with clean UI cards
+- Tap to view/edit exercise details
 
 Long-press to delete with confirmation
 
