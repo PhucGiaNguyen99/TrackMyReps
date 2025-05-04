@@ -1,111 +1,149 @@
 TrackMyReps
-TrackMyReps is a workout planning and tracking Android app built for users who want to manage their exercises and stay on top of their fitness routine. The app allows users to create and edit exercises, build a workout plan, and track completion during a session.
+
+TrackMyReps is a fitness-focused Android app designed to help users plan workouts, manage exercises, and stay on top of their fitness routine. It offers a clean, motivating UI and securely syncs user data using Firebase Authentication and Firestore, while supporting offline access with a local SQLite database.
 
 📱 Features
+
 🏋️ Exercise Management
+
 Add new exercises with:
 
-Name (must be unique)
+Unique name (required)
 
-Sets, Reps, Weight (numeric-only with validation)
+Optional sets, reps, and weight fields (default to 0 if empty)
 
-Input hints are provided for user guidance
+Validate input with helpful hints and error checking
 
-View exercises in a scrollable grid layout (2-column)
+View all exercises in a vertically scrolling list with clean UI cards
 
-Tap an exercise to view/edit its details
+Tap to view/edit exercise details
 
-Long-press an exercise to delete it with confirmation
+Long-press to delete with confirmation
 
-3 default exercises are added on first launch
+Automatically includes 3 default exercises on first launch
 
 📓 Workout Planning
-Select multiple exercises from the list to create a workout plan
 
-Confirm the selected items before creating the plan
+Select multiple exercises to create a new workout plan
 
-Only one plan is tracked at a time
+Confirm selected items before saving the plan
 
-Plan is remembered using a global manager, even if the screen rotates
+Only one plan is active at a time
+
+Plan is remembered via a global manager, even after screen rotation
 
 ✅ Workout Session Tracking
-View the selected workout plan as a list
 
-Each item includes a “Complete” button with confirmation dialog
+Display the selected workout plan as a to-do list
 
-When marked complete, exercises are removed from the list
+Mark exercises as complete via a button with confirmation
 
-When all items are completed, a “Workout Completed!” toast appears
+Remove completed items dynamically
+
+Show "Workout Completed!" toast when all items are marked
 
 ⚙️ Technical Overview
-🛠 Tech Stack
+
+🛠️ Tech Stack
+
 Language: Java
 
 Platform: Android SDK
 
-Database: SQLite with SQLiteOpenHelper
+Local Database: SQLite (via SQLiteOpenHelper)
 
-UI Components: RecyclerView, ListView, AlertDialogs, ScrollView, EditText, Buttons
+Remote Database: Firebase Firestore
+
+Authentication: Firebase Auth
+
+UI Components: RecyclerView, Material Design Buttons, TextInputLayouts, CardView
 
 📂 Key Components
-models/Exercise.java: Model class for exercise details
 
-WorkoutDatabaseHelper.java: Handles database creation, default values, and CRUD
+models/Exercise.java: Model class for exercise
 
-WorkoutPlanManager.java: Static helper to store the current selected workout plan
+WorkoutDatabaseHelper.java: Manages local DB with CRUD + default values
 
-ExerciseAdapter.java: Used in MainActivity for displaying all exercises
+WorkoutPlanManager.java: Global state manager for workout plan
 
-WorkoutPlanAdapter.java: Used in session tracking to display and mark items as complete
+ExerciseAdapter.java: Binds exercise list to RecyclerView
 
-🔄 Data Persistence & Rotation Handling
-SQLite is used for storing exercises (data persists across app restarts)
+WorkoutPlanAdapter.java: Tracks session list with completion
 
-Exercises are reloaded on resume in the main screen
+🔄 Data Persistence & Syncing
 
-WorkoutPlanManager ensures session plans survive orientation changes
+SQLite stores exercises locally for fast access and offline support
 
-🧠 Input & Error Handling
-Input fields only accept proper numeric values
+Firestore stores per-user data for backup and cross-device access
 
-Validation and error checking prevent crashes
+Firestore sync happens at login:
 
-Confirmation dialogs for deletion and workout planning
+Download all exercises for user from Firestore
 
-💡 Future Improvements
-Save and name multiple workout plans
+Insert them into local SQLite (refreshing local state)
 
-Add completed date tracking & session history
+Firestore is updated after any local update:
 
-Add progress graphs and analytics
+Only update Firestore after a successful local SQLite insert/update/delete
 
-Support for dark mode and themes
+🔍 Input & Error Handling
 
+Input fields support validation and numeric-only checks
 
-** Save new exercise to SQLite locally first, then save it to Firestore for each user **
-- Path: "users/{userId}/exercises/{exerciseName}
+Toast messages guide the user for successful and failed actions
 
-- Sync data after adding new exercise to Firestore under user collection after adding to SQLite:
-    + Download data from Firestore
-    + Save it into SQLite - the local database gets refreshed
-    + Use that to render UI fast and support offline use
-    + Firstore: Data is backed up per use - they can log in from any device and get their data
-    + SQLite: data is stored locally on the device. When user clears app data or uninstalls the SQLite is wiped but the Firestore is still safe
+Confirmation dialogs are used for sensitive actions like delete
 
-- Handle Real-Time Updates:
-    + Update the SQLite immediately - reflects in RecyclerView.
-    + Update the Firestore asynchronously in the background.
+🌐 Firebase Integration
 
-- Secure Firestore Rules
+🔑 Authentication
 
-- Backed Up Planned Workouts.
+Uses Firebase Auth for secure login
 
-** Update to Firebase after successful update on SQLite **
-- Only update Firestore after the SQLite update succeeds.
-- Handle Firestore success/failure using listeners. Add setResult() and finish() when successful to communicate back to the previous screen (MainActivity).
+Data is linked per user via their userId
 
-** Delete item in Firebase after successful delete on SQLite **
-- Delete exercise of user in Firebase.
-- No need to add setResult() and finish() because working on and staying on MainActivity, not working on side activity so no need to communicate back to previous activity like update.
-Only update the RecyclerView directly, so no need to close the activity or pass a result back.
+📁 Firestore Structure
 
+Path: users/{userId}/exercises/{exerciseName}
+
+Each user's exercises are stored as separate documents
+
+⏰ Offline Support
+
+Firestore reads fallback to local cache when offline
+
+SQLite provides primary access when network is unavailable
+
+Upon next login or refresh, Firestore updates are synced
+
+✨ Real-Time Firestore Handling
+
+On Add/Edit:
+
+Update SQLite immediately
+
+Then update Firestore (asynchronously)
+
+On Delete:
+
+Remove from SQLite
+
+Then delete from Firestore
+
+📊 Future Improvements
+
+Allow users to name and save multiple workout plans
+
+Track completion history with dates and stats
+
+Add progress charts and analytics
+
+Enable dark mode and color theme options
+
+Add optional profile with display name and profile picture
+
+✍️ Credits
+
+© 2025 Phuc Nguyen
+
+Built with dedication and a mission to simplify fitness tracking.
