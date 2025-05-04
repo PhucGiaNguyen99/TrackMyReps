@@ -21,18 +21,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Logout Button -->
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:textColor="#1B5E20"
-        app:layout_constraintTop_toBottomOf="@id/mainTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <!-- Divider -->
     <View
@@ -40,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="#DDDDDD"
-        app:layout_constraintTop_toBottomOf="@id/logoutButton"
+        app:layout_constraintTop_toBottomOf="@id/mainTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
@@ -103,6 +92,19 @@
             android:textColor="@color/white"
             android:textAllCaps="false"
             />
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:textAllCaps="false"
+            android:layout_marginTop="12dp"
+            android:textColor="#B71C1C"
+            android:backgroundTint="@android:color/transparent"
+            android:padding="4dp"
+            />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
