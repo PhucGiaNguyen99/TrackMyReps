@@ -49,21 +49,27 @@ public class AddExerciseActivity extends AppCompatActivity {
         String repsStr = repsInput.getText().toString().trim();
         String weightStr = weightInput.getText().toString().trim();
 
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(setsStr)
-                || TextUtils.isEmpty(repsStr) || TextUtils.isEmpty(weightStr)) {
-            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(name)) {
+            Toast.makeText(this, "Please enter the exercise name.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         try {
-            int sets = Integer.parseInt(setsStr);
-            int reps = Integer.parseInt(repsStr);
-            int weight = Integer.parseInt(weightStr);
+            // Modified that any of those 3 can be optional
+            int sets = TextUtils.isEmpty(setsStr) ? 0 : Integer.parseInt(setsStr);
+            int reps = TextUtils.isEmpty(repsStr) ? 0 : Integer.parseInt(repsStr);
+            int weight = TextUtils.isEmpty(weightStr) ? 0 : Integer.parseInt(weightStr);
 
-            if (sets <= 0 || reps <= 0 || weight < 0) {
-                Toast.makeText(this, "Values must be positive", Toast.LENGTH_SHORT).show();
+            // Ensure at least one of three is non-zero
+            if (sets == 0 && reps == 0 && weight == 0) {
+                Toast.makeText(this, "Please enter at least one detail (sets, reps, or weight).", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            //if (sets <= 0 || reps <= 0 || weight < 0) {
+            //    Toast.makeText(this, "Values must be positive", Toast.LENGTH_SHORT).show();
+            //    return;
+            //}
 
             if (dbHelper.exerciseExists(name)) {
                 Toast.makeText(this, "Exercise with that name already exists", Toast.LENGTH_SHORT).show();
