@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#C5E1A5"
     android:padding="16dp">
 
     <LinearLayout
@@ -19,7 +18,7 @@
             android:text="Exercise Details"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="#1B5E20"
             android:layout_marginBottom="20dp" />
 
         <!-- Exercise Name -->
@@ -27,7 +26,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Exercise Name"
-            app:boxStrokeColor="@color/black"
+            android:layout_marginTop="8dp"
+            app:boxStrokeColor="#1B5E20"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -35,7 +41,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
-                android:enabled="false" />
+                android:enabled="false"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:padding="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Sets -->
@@ -44,14 +53,23 @@
             android:layout_height="wrap_content"
             android:hint="Number of Sets"
             android:layout_marginTop="16dp"
-            app:boxStrokeColor="@color/black"
+            app:boxStrokeColor="#1B5E20"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/addSetsInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:padding="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Reps -->
@@ -60,14 +78,23 @@
             android:layout_height="wrap_content"
             android:hint="Reps per Set"
             android:layout_marginTop="16dp"
-            app:boxStrokeColor="@color/black"
+            app:boxStrokeColor="#1B5E20"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/addRepsInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:padding="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Weight -->
@@ -76,14 +103,23 @@
             android:layout_height="wrap_content"
             android:hint="Weight (lbs)"
             android:layout_marginTop="16dp"
-            app:boxStrokeColor="@color/black"
+            app:boxStrokeColor="#1B5E20"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/addWeightInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:padding="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Buttons -->
@@ -101,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:text="Save"
                 android:layout_marginEnd="8dp"
-                android:backgroundTint="@color/black"
+                android:backgroundTint="@color/deep_green_btn_background"
                 android:textColor="@color/white" />
 
             <Button
@@ -110,7 +146,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Cancel"
-                android:backgroundTint="@color/black"
+                android:backgroundTint="@color/deep_green_btn_background"
                 android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>

@@ -4,7 +4,8 @@
     android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="#C5E1A5">
 
     <TextView
         android:id="@+id/exerciseText"
@@ -12,11 +13,13 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:textColor="@android:color/black" />
+        android:textColor="#1B5E20" />
 
     <Button
         android:id="@+id/completeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Complete" />
+        android:text="Complete"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/deep_green_btn_background"/>
 </LinearLayout>
