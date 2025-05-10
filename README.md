@@ -80,6 +80,9 @@ Real-Time Firestore Handling
    + Remove from SQLite
    + Then delete from Firestore
 
+05/10:
+Modify to allow user add multiple instances of an item to a workout plan. 
+
 Future Improvements
 - Allow users to name and save multiple workout plans
 - Track completion history with dates and stats
