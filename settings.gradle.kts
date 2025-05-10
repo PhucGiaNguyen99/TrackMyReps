@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "project2-pnguye68"
+rootProject.name = "TrackMyReps"
 include(":app")
  

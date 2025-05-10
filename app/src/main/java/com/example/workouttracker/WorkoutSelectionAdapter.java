@@ -3,6 +3,7 @@ package com.example.workouttracker;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -15,17 +16,20 @@ import java.util.List;
 
 public class WorkoutSelectionAdapter extends RecyclerView.Adapter<WorkoutSelectionAdapter.ViewHolder> {
     private List<Exercise> exercises;
-    private boolean[] checked;
+
+    // Changed to allow multiple instances of an item
+    // private boolean[] checked;
+    int[] quantities;
 
     public WorkoutSelectionAdapter(List<Exercise> exercises) {
         this.exercises = exercises;
-        this.checked = new boolean[exercises.size()];
+        this.quantities = new int[exercises.size()];
     }
 
     public List<Exercise> getSelectedExercises() {
         List<Exercise>  selected = new java.util.ArrayList<>();
         for (int i = 0; i < exercises.size(); i++) {
-            if (checked[i]) {
+            for (int j = 0; j < quantities[i]; j++) {
                 selected.add(exercises.get(i));
             }
         }
@@ -46,11 +50,17 @@ public class WorkoutSelectionAdapter extends RecyclerView.Adapter<WorkoutSelecti
 
         holder.nameText.setText(exercise.getName());
 
-        holder.checkbox.setOnCheckedChangeListener(null); // clear old listener
-        holder.checkbox.setChecked(checked[position]);    // set correct value
+        holder.increaseBtn.setOnClickListener(v -> {
+            quantities[holder.getAdapterPosition()]++;
+            holder.quantityText.setText(String.valueOf(quantities[holder.getAdapterPosition()]));
+        });
 
-        holder.checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            checked[holder.getAdapterPosition()] = isChecked; // always get current adapter position
+        holder.decreaseBtn.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if (quantities[pos] > 0) {
+                quantities[pos]--;
+                holder.quantityText.setText(String.valueOf(quantities[pos]));
+            }
         });
 
     }
@@ -61,20 +71,25 @@ public class WorkoutSelectionAdapter extends RecyclerView.Adapter<WorkoutSelecti
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView nameText;
-        CheckBox checkbox;
+        TextView nameText, quantityText;
+        Button increaseBtn, decreaseBtn;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameText = itemView.findViewById(R.id.exerciseNameCheckbox);
-            checkbox = itemView.findViewById(R.id.checkbox);
+            // checkbox = itemView.findViewById(R.id.checkbox);
+            quantityText = itemView.findViewById(R.id.quantityText);
+            increaseBtn = itemView.findViewById(R.id.increaseButton);
+            decreaseBtn = itemView.findViewById(R.id.decreaseButton);
         }
     }
 
-    // Adding this function for testing
-    public void setChecked(int index, boolean isChecked) {
-        checked[index] = isChecked;
+    // For testing
+    public void setQuantity(int index, int value) {
+        if (index >= 0 && index < quantities.length) {
+            quantities[index] = Math.max(0, value);
+        }
     }
-
 
 }
