@@ -66,4 +66,26 @@ Setup Firebase:
     . Insert into local SQLite database using WorkoutDatabaseHelper.
   + Improved: Only retrieved from Firestore and stored to the local when the local is empty to avoid
 duplicate -> NEED TO FIGURE OUT WHEN TO DO AND WHEN DO NOT!!!!!!!
+
+** Add exercise items to multiple plans rather than just only one by default:
+- Create a WorkoutPlan model with plan name and list of exercises. Created CRUD functions for exercise items.
+- Update WorkoutPlanManager: Created CRUD functions for plans. 
+- In PlanWorkoutActivity:
+  + Add a dialog to name the new plan.
+  + Store the selected exercises in a new WorkoutPlan object.
+  + Save this plan to a shared list (using WorkoutPlanManager.addPlan(plan)).
+- Create a new activity: ViewWorkoutPlansActivity
+  + Display a list of all workout plans with name and number of exercises. 
+  + On click, navigate to start the specific workout.
+
+When the user selects a plan (e.g., from ViewWorkoutPlansActivity), pass the plan’s name via intent.
+
+In WorkoutSessionActivity, retrieve the plan by name from WorkoutPlanManager.getPlanByName(planName).
+
+Load its exercises into workoutList.
+
+- Add a View Workout Plans screen where user can see all saved plans and he can tap a plan to open WorkoutSessionActivity for it -> ViewWorkoutPlansActivity.
+  + View all workout plans he have created so far.
+  + choose one to start again later.
+  + delete or edit a specific plan.
   + 
