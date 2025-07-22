@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workouttracker.database.WorkoutDatabaseHelper;
 import com.example.workouttracker.models.Exercise;
+import com.example.workouttracker.models.WorkoutPlan;
 
 import java.util.List;
 
@@ -51,16 +53,41 @@ public class PlanWorkoutActivity extends AppCompatActivity {
                 message.append("\nCreate this workout plan?");
 
                 new AlertDialog.Builder(this)
-                        .setTitle("Confirm Plan")
-                        .setMessage(message.toString())
-                        .setPositiveButton("Yes", (dialog, which) -> {
-                            WorkoutPlanManager.setPlan(selected); // Store it globally
+                        .setTitle("Name This Plan")
+                        .setView(R.layout.dialog_plan_name)
+                        .setPositiveButton("Save", (dialog, which) -> {
+                            //WorkoutPlanManager.setPlan(selected); // Store it globally
+                            AlertDialog alertDialog = (AlertDialog) dialog;
+                            EditText nameInput = alertDialog.findViewById(R.id.planNameInput);
+                            String planName = nameInput.getText().toString().trim();
+
+                            if (!planName.isEmpty()) {
+                                // Prevent duplicate plan names
+                                if (WorkoutPlanManager.getPlanByName(planName) != null) {
+                                    Toast.makeText(this, "A plan with this name already exists", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                                WorkoutPlan newPlan = new WorkoutPlan(planName, selected);
+                                WorkoutPlanManager.addPlan(newPlan);
+
+                                Toast.makeText(this, "Plan \"" + planName + "\" created!", Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(this, WorkoutSessionActivity.class);
+                                intent.putExtra("planName", planName);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(this, "Plan name cannot be empty", Toast.LENGTH_SHORT).show();
+                            }
+
+
                             Intent intent = new Intent(PlanWorkoutActivity.this, MainActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(intent);
                             finish();
                         })
-                        .setNegativeButton("No", null)
+                        .setNegativeButton("Cancel", null)
                         .show();
             }
         });
