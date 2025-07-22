@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.workouttracker.models.Exercise;
+import com.example.workouttracker.models.WorkoutPlan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 public class WorkoutSessionActivity extends AppCompatActivity {
 
     private ListView sessionListView;
-    private List<Exercise> workoutList;
+    private List<WorkoutPlan> workoutList;
     private WorkoutPlanAdapter adapter;
 
     @Override
@@ -25,7 +26,7 @@ public class WorkoutSessionActivity extends AppCompatActivity {
         sessionListView = findViewById(R.id.sessionListView);
 
         // Get the workout plan directly from the global manager
-        workoutList = new ArrayList<>(WorkoutPlanManager.getPlan());
+        workoutList = new ArrayList<>(WorkoutPlanManager.getPlans());
 
 
         if (workoutList == null || workoutList.isEmpty()) {

@@ -9,23 +9,24 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.workouttracker.models.Exercise;
+import com.example.workouttracker.models.WorkoutPlan;
 
 import java.util.List;
 
-public class WorkoutPlanAdapter extends ArrayAdapter<Exercise> {
+public class WorkoutPlanAdapter extends ArrayAdapter<WorkoutPlan> {
 
     private final Context context;
-    private final List<Exercise> exercises;
+    private final List<WorkoutPlan> plans;
 
-    public WorkoutPlanAdapter(Context context, List<Exercise> exercises) {
-        super(context, 0, exercises);
+    public WorkoutPlanAdapter(Context context, List<WorkoutPlan> plans) {
+        super(context, 0, plans);
         this.context = context;
-        this.exercises = exercises;
+        this.plans = plans;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Exercise exercise = getItem(position);
+        WorkoutPlan plan = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_workout_plan, parent, false);
@@ -34,17 +35,7 @@ public class WorkoutPlanAdapter extends ArrayAdapter<Exercise> {
         TextView exerciseText = convertView.findViewById(R.id.exerciseText);
         Button completeBtn = convertView.findViewById(R.id.completeButton);
 
-        exerciseText.setText(exercise.getName() + " - " +
-                exercise.getSets() + " sets x " +
-                exercise.getReps() + " reps, " +
-                exercise.getWeight() + " lbs");
-
-        completeBtn.setOnClickListener(v -> {
-            if (context instanceof WorkoutSelectionActivity) {
-                ((WorkoutSelectionActivity) context).showConfirmationDialog(exercise);
-            }
-        });
-
+        exerciseText.setText(plan.getName());
         return convertView;
     }
 }
