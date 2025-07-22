@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.workouttracker.models.CheckIn;
 import com.example.workouttracker.models.Exercise;
 
 import java.util.ArrayList;
@@ -21,6 +22,10 @@ public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_REPS = "reps";
     public static final String COLUMN_WEIGHT = "weight";
 
+    private static final String TABLE_CHECKIN = "checkin";
+    private static final String COLUMN_CHECKIN_ID = "id";
+    private static final String COLUMN_TIMESTAMP = "timestamp";
+
     public WorkoutDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -34,6 +39,12 @@ public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_REPS + " INTEGER, " +
                 COLUMN_WEIGHT + " INTEGER)";
         db.execSQL(createTable);
+
+        String CREATE_CHECKIN_TABLE = "CREATE TABLE " + TABLE_CHECKIN + "("
+                + COLUMN_CHECKIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_TIMESTAMP + " TEXT"
+                + ")";
+        db.execSQL(CREATE_CHECKIN_TABLE);
 
         // Insert default exercises to the dtb
         insertDefaultExercises(db);
@@ -165,6 +176,51 @@ public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
     public void clearAllExercises() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_EXERCISES, null, null);
+    }
+
+    // Methods to manage Check In
+    // Insert check-in
+    public void insertCheckIn(String timestamp) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TIMESTAMP, timestamp);
+        db.insert(TABLE_CHECKIN, null, values);
+        db.close();
+    }
+
+    // Get all check-ins
+    public List<CheckIn> getAllCheckIns() {
+        List<CheckIn> checkIns = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_CHECKIN + " ORDER BY " + COLUMN_TIMESTAMP + " DESC";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CHECKIN_ID));
+                String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIMESTAMP));
+                checkIns.add(new CheckIn(id, timestamp));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return checkIns;
+    }
+
+    // Get check-in count
+    public int getCheckInCount() {
+        String countQuery = "SELECT COUNT(*) FROM " + TABLE_CHECKIN;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
+        return count;
     }
 
 }
