@@ -66,6 +66,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Check In Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/checkInButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Check In"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        app:cornerRadius="24dp"
+        app:elevation="6dp"
+        android:backgroundTint="#388E3C"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/startAppButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- View Check-In History Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/viewCheckInHistoryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="View Check-In History"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:layout_marginTop="12dp"
+        app:cornerRadius="24dp"
+        app:elevation="6dp"
+        android:backgroundTint="#4CAF50"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/checkInButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
     <!-- Footer Credit -->
     <TextView
         android:id="@+id/creditText"
