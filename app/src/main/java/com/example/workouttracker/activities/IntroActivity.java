@@ -1,10 +1,12 @@
-package com.example.workouttracker;
+package com.example.workouttracker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.workouttracker.R;
 
 public class IntroActivity extends AppCompatActivity {
 

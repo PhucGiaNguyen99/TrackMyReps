@@ -1,4 +1,4 @@
-package com.example.workouttracker;
+package com.example.workouttracker.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.workouttracker.models.Exercise;
+import com.example.workouttracker.R;
 import com.example.workouttracker.models.WorkoutPlan;
 
 import java.util.List;

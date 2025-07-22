@@ -1,4 +1,4 @@
-package com.example.workouttracker;
+package com.example.workouttracker.activities;
 
 
 import android.app.AlertDialog;
@@ -14,7 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.workouttracker.R;
+import com.example.workouttracker.adapters.WorkoutSelectionAdapter;
 import com.example.workouttracker.database.WorkoutDatabaseHelper;
+import com.example.workouttracker.managers.WorkoutPlanManager;
 import com.example.workouttracker.models.Exercise;
 import com.example.workouttracker.models.WorkoutPlan;
 

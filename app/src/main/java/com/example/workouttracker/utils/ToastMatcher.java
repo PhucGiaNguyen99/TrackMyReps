@@ -1,4 +1,4 @@
-package com.example.workouttracker;
+package com.example.workouttracker.utils;
 
 import android.os.IBinder;
 import android.view.WindowManager;

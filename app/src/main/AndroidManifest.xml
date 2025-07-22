@@ -16,17 +16,17 @@
         android:theme="@style/Theme.WorkoutTracker"
         tools:targetApi="31">
 
-        <activity android:name=".AuthenticationActivity" />
-        <activity android:name=".ExerciseDisplayActivity" />
-        <activity android:name=".AddExerciseActivity" />
-        <activity android:name=".ExerciseDetailActivity" />
-        <activity android:name=".PlanWorkoutActivity" />
-        <activity android:name=".WorkoutSessionActivity" />
-        <activity android:name=".WorkoutSelectionActivity" />
+        <activity android:name=".activities.AuthenticationActivity" />
+        <activity android:name=".activities.ExerciseDisplayActivity" />
+        <activity android:name=".activities.AddExerciseActivity" />
+        <activity android:name=".activities.ExerciseDetailActivity" />
+        <activity android:name=".activities.PlanWorkoutActivity" />
+        <activity android:name=".activities.WorkoutSessionActivity" />
+        <activity android:name=".activities.WorkoutSelectionActivity" />
 
 
         <activity
-            android:name=".IntroActivity"
+            android:name=".activities.IntroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +35,7 @@
         </activity>
 
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activities.MainActivity" />
     </application>
 
 </manifest>

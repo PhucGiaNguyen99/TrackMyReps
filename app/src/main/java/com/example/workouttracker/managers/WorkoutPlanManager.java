@@ -1,5 +1,5 @@
 // WorkoutPlanManager.java
-package com.example.workouttracker;
+package com.example.workouttracker.managers;
 
 import com.example.workouttracker.models.Exercise;
 import com.example.workouttracker.models.WorkoutPlan;

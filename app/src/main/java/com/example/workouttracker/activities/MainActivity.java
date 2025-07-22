@@ -1,4 +1,4 @@
-package com.example.workouttracker;
+package com.example.workouttracker.activities;
 
 
 import android.app.AlertDialog;
@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.workouttracker.R;
+import com.example.workouttracker.adapters.ExerciseAdapter;
 import com.example.workouttracker.database.WorkoutDatabaseHelper;
 import com.example.workouttracker.models.Exercise;
 import com.google.firebase.auth.FirebaseAuth;

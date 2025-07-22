@@ -1,4 +1,4 @@
-package com.example.workouttracker;
+package com.example.workouttracker.activities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -8,7 +8,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.workouttracker.models.Exercise;
+import com.example.workouttracker.R;
+import com.example.workouttracker.adapters.WorkoutPlanAdapter;
+import com.example.workouttracker.managers.WorkoutPlanManager;
 import com.example.workouttracker.models.WorkoutPlan;
 
 import java.util.ArrayList;

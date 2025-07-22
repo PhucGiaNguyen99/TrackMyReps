@@ -1,5 +1,6 @@
 package com.example.workouttracker;
 
+import com.example.workouttracker.adapters.WorkoutSelectionAdapter;
 import com.example.workouttracker.models.Exercise;
 
 import org.junit.Before;
